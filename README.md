@@ -1,3 +1,1 @@
 # Super-Duper-Project
-
-hello

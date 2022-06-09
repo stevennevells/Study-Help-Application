@@ -92,3 +92,5 @@ function searchHistory () {
             alert('Unable to connect to API');
             });
 }
+
+do not do this

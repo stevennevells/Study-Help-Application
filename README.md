@@ -1,11 +1,10 @@
-# Title of Project
-Inspirational Quote of the Day
+# School Resources
 
 ## Website Description
-When pressing a generator button, and inspirational quote of the day displays over a random galaxy image from NASA.
+When pressing a corresponding, school resources are displayed.
 
 ## Challenge Description
-The API for Flickr is used to display an inspirational quote and the API from NASA is used to display a galaxy background.
+The API for Flickr is used to display a subject image and the API from Open Library is used to display a list of school subject resources.
 
 ## Acceptance Criteria
 

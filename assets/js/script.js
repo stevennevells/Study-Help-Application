@@ -5,17 +5,39 @@ var historyButton = document.querySelector('.history-button');
 var topicContainer = document.querySelector('.topic-container');
 
 // Event listeners
-mathButton.addEventListener('click', math);
-literatureButton.addEventListener('click', searchLiterature);
-scienceButton.addEventListener('click', searchScience);
-historyButton.addEventListener('click', searchHistory);
+mathButton.addEventListener('click', mathFunc);
+literatureButton.addEventListener('click', literatureFunc);
+scienceButton.addEventListener('click', scienceFunc);
+historyButton.addEventListener('click', historyFunc);
 
 
-function math(){
+function mathFunc(){
+    clearScreen();
     searchMathImage();
     searchMathBooks();
 }
 
+function literatureFunc(){
+    clearScreen();
+    searchLiteratureImage();
+    searchLiteratureBooks();
+}
+
+function scienceFunc(){
+    clearScreen();
+    searchScienceImage();
+    searchScienceBooks();
+}
+
+function historyFunc(){
+    clearScreen();
+    searchHistoryImage();
+    searchHistoryBooks();
+}
+
+function clearScreen() {
+    topicContainer.textContent = '';
+}
 
 function searchMathBooks () {
     var apiUrl = "https://openlibrary.org/subjects/math.json";
@@ -26,8 +48,7 @@ function searchMathBooks () {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    topicContainer.textContent = '';
+                    //Function for populating screen with book list
                     displayResources(data);
                 });
             } else {
@@ -41,7 +62,7 @@ function searchMathBooks () {
 
 
 
-function searchLiterature () {
+function searchLiteratureBooks () {
     var apiUrl = "https://openlibrary.org/subjects/literature.json";
 
     fetch(apiUrl)
@@ -50,8 +71,7 @@ function searchLiterature () {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    topicContainer.textContent = '';
+                    //Function for populating screen with book list
                     displayResources(data);
                 });
             } else {
@@ -64,7 +84,7 @@ function searchLiterature () {
 }
 
 
-function searchScience () {
+function searchScienceBooks () {
     var apiUrl = "https://openlibrary.org/subjects/science.json";
 
     fetch(apiUrl)
@@ -73,8 +93,7 @@ function searchScience () {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    topicContainer.textContent = '';
+                    //Function for populating screen with book list
                     displayResources(data);
                 });
             } else {
@@ -87,7 +106,7 @@ function searchScience () {
 }
 
 
-function searchHistory () {
+function searchHistoryBooks () {
     var apiUrl = "https://openlibrary.org/subjects/history.json";
 
     fetch(apiUrl)
@@ -96,8 +115,7 @@ function searchHistory () {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    topicContainer.textContent = '';
+                    //Function for populating screen with book list
                     displayResources(data);
                 });
             } else {
@@ -110,7 +128,7 @@ function searchHistory () {
 }
 
 
-
+// Function for populating screen with book list
 function displayResources(data) {
     var resourcesContainerEl = document.createElement('div');
     var resourcesHeaderEl = document.createElement('h3');
@@ -148,8 +166,6 @@ function searchMathImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    // topicContainer.textContent = '';
                     // displayImage(data);
                 });
             } else {
@@ -172,8 +188,6 @@ function searchScienceImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //put function for populating screen here
-                    // topicContainer.textContent = '';
                     // displayImage(data);
                 });
             } else {
@@ -186,5 +200,48 @@ function searchScienceImage() {
 
 }
 
+function searchLiteratureImage() {
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=books&format=json&nojsoncallback=1';
+
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    // displayImage(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+
+}
+
+function searchHistoryImage() {
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=history&format=json&nojsoncallback=1';
+
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    // displayImage(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+
+}
 
 

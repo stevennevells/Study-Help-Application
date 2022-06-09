@@ -11,7 +11,7 @@ scienceButton.addEventListener('click', searchScience);
 historyButton.addEventListener('click', searchHistory);
 
 function searchMath () {
-    var apiUrl = "https://openlibrary.org/subjects/mathemathics.json";
+    var apiUrl = "https://openlibrary.org/subjects/math.json";
 
     fetch(apiUrl)
         .then(function (response) {
@@ -20,6 +20,7 @@ function searchMath () {
                 response.json().then(function (data) {
                     console.log(data);
                     //put function for populating screen here
+                    topicContainer.textContent = '';
                     displayResources(data);
                 });
             } else {
@@ -43,6 +44,8 @@ function searchLiterature () {
                 response.json().then(function (data) {
                     console.log(data);
                     //put function for populating screen here
+                    topicContainer.textContent = '';
+                    displayResources(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -64,6 +67,8 @@ function searchScience () {
                 response.json().then(function (data) {
                     console.log(data);
                     //put function for populating screen here
+                    topicContainer.textContent = '';
+                    displayResources(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -85,6 +90,8 @@ function searchHistory () {
                 response.json().then(function (data) {
                     console.log(data);
                     //put function for populating screen here
+                    topicContainer.textContent = '';
+                    displayResources(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -101,22 +108,24 @@ function displayResources(data) {
     var resourcesContainerEl = document.createElement('div');
     var resourcesHeaderEl = document.createElement('h3');
     var bookListEl = document.createElement('ul');
-    var bookListItemEl = document.createElement('li');
-
     
-    resourcesHeaderEl.textContent = 'Recommended Books:';
-    bookListItemEl.textContent = data.works[0].title;
+    resourcesHeaderEl.textContent = 'Recommended Books:';;
 
     resourcesContainerEl.classList = 'resources-container';
     resourcesHeaderEl.classList = 'resources-header';
     bookListEl.classList = 'book-list-ul';
-    bookListItemEl.classList = 'book-list-item';
 
-    bookListEl.appendChild(bookListItemEl);
+
+    var bookArray = [0,1,2,3,4,5,6,7,8,9,10,11];
+    for (var i = 0; i < bookArray.length; i++) {
+        var bookListItemEl = document.createElement('li');
+        bookListItemEl.textContent = data.works[i].title;
+        bookListItemEl.classList = 'book-list-item';
+        bookListEl.appendChild(bookListItemEl);
+    }
+
     resourcesHeaderEl.appendChild(bookListEl);
     resourcesContainerEl.appendChild(resourcesHeaderEl);
     topicContainer.appendChild(resourcesContainerEl);
 }
-
-//test
 

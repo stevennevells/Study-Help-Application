@@ -5,12 +5,19 @@ var historyButton = document.querySelector('.history-button');
 var topicContainer = document.querySelector('.topic-container');
 
 // Event listeners
-mathButton.addEventListener('click', searchMath);
+mathButton.addEventListener('click', math);
 literatureButton.addEventListener('click', searchLiterature);
 scienceButton.addEventListener('click', searchScience);
 historyButton.addEventListener('click', searchHistory);
 
-function searchMath () {
+
+function math(){
+    searchMathImage();
+    searchMathBooks();
+}
+
+
+function searchMathBooks () {
     var apiUrl = "https://openlibrary.org/subjects/math.json";
 
     fetch(apiUrl)
@@ -128,4 +135,56 @@ function displayResources(data) {
     resourcesContainerEl.appendChild(resourcesHeaderEl);
     topicContainer.appendChild(resourcesContainerEl);
 }
+
+
+
+function searchMathImage() {
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=calculus&format=json&nojsoncallback=1';
+
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //put function for populating screen here
+                    // topicContainer.textContent = '';
+                    // displayImage(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+
+}
+
+function searchScienceImage() {
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=science&format=json&nojsoncallback=1';
+
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //put function for populating screen here
+                    // topicContainer.textContent = '';
+                    // displayImage(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+
+}
+
+
 

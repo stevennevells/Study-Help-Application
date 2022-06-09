@@ -1,7 +1,7 @@
 # School Resources
 
 ## Website Description
-When pressing a corresponding, school resources are displayed.
+When pressing a corresponding button, school resources are displayed.
 
 ## Challenge Description
 The API for Flickr is used to display a subject image and the API from Open Library is used to display a list of school subject resources.

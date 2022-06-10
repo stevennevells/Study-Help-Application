@@ -1,3 +1,40 @@
-.display-container {
-display:inline;
+main {
+    background-color: rgb(84, 178, 144);
+}
+
+.book-list-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-template-rows: repeat(6, 175px); 
+    grid-gap: 10px;
+    grid-auto-flow: dense;
+}
+
+.book-list-item {
+display: flex;
+margin: 1rem;
+align-items: center;
+}
+
+.recommendations-header {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.book-list-image {
+    height: 10rem;
+    margin-right: 1rem;
+}
+
+.book-list-title {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.book-list-author {
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
 }

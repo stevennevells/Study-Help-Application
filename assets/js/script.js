@@ -2,7 +2,8 @@ var mathButton= document.querySelector('.math-button');
 var literatureButton= document.querySelector('.literature-button');
 var scienceButton= document.querySelector('.science-button');
 var historyButton = document.querySelector('.history-button');
-var topicContainer = document.querySelector('.topic-container');
+var booksContainer = document.querySelector('.books-container');
+var imageContainer = document.querySelector('.image-container');
 
 // Event listeners
 mathButton.addEventListener('click', mathFunc);
@@ -13,34 +14,38 @@ historyButton.addEventListener('click', historyFunc);
 
 function mathFunc(){
     clearScreen();
+    searchBooks();
     searchMathImage();
-    searchMathBooks();
 }
 
 function literatureFunc(){
     clearScreen();
+    searchBooks();
     searchLiteratureImage();
-    searchLiteratureBooks();
 }
 
 function scienceFunc(){
     clearScreen();
+    searchBooks();
     searchScienceImage();
-    searchScienceBooks();
 }
 
 function historyFunc(){
     clearScreen();
+    searchBooks();
     searchHistoryImage();
-    searchHistoryBooks();
 }
 
 function clearScreen() {
-    topicContainer.textContent = '';
+    booksContainer.textContent = '';
+    imageContainer.textContent = '';
 }
 
-function searchMathBooks () {
-    var apiUrl = "https://openlibrary.org/subjects/math.json";
+function searchBooks () {
+    var buttonText = event.target.textContent;
+    var lowercaseButtonText = buttonText.toLowerCase();
+    console.log(buttonText)
+    var apiUrl = "https://openlibrary.org/subjects/" + lowercaseButtonText + ".json";
 
     fetch(apiUrl)
         .then(function (response) {
@@ -49,7 +54,7 @@ function searchMathBooks () {
                 response.json().then(function (data) {
                     console.log(data);
                     //Function for populating screen with book list
-                    displayResources(data);
+                    displayBooks(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -59,106 +64,47 @@ function searchMathBooks () {
             alert('Unable to connect to API');
             });
 }
-
-
-
-function searchLiteratureBooks () {
-    var apiUrl = "https://openlibrary.org/subjects/literature.json";
-
-    fetch(apiUrl)
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function (data) {
-                    console.log(data);
-                    //Function for populating screen with book list
-                    displayResources(data);
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to API');
-            });
-}
-
-
-function searchScienceBooks () {
-    var apiUrl = "https://openlibrary.org/subjects/science.json";
-
-    fetch(apiUrl)
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function (data) {
-                    console.log(data);
-                    //Function for populating screen with book list
-                    displayResources(data);
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to API');
-            });
-}
-
-
-function searchHistoryBooks () {
-    var apiUrl = "https://openlibrary.org/subjects/history.json";
-
-    fetch(apiUrl)
-        .then(function (response) {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(function (data) {
-                    console.log(data);
-                    //Function for populating screen with book list
-                    displayResources(data);
-                });
-            } else {
-                alert('Error: ' + response.statusText);
-            }
-        })
-        .catch(function (error) {
-            alert('Unable to connect to API');
-            });
-}
-
 
 // Function for populating screen with book list
-function displayResources(data) {
-    var resourcesContainerEl = document.createElement('div');
-    var resourcesHeaderEl = document.createElement('h3');
+function displayBooks(data) {
+    var recommendationHeaderEl = document.createElement('h3');
     var bookListEl = document.createElement('ul');
     
-    resourcesHeaderEl.textContent = 'Recommended Books:';;
+    recommendationHeaderEl.textContent = 'Recommended Books:';;
 
-    resourcesContainerEl.classList = 'resources-container';
-    resourcesHeaderEl.classList = 'resources-header';
+    recommendationHeaderEl.classList = 'recommendations-header';
     bookListEl.classList = 'book-list-ul';
 
 
     var bookArray = [0,1,2,3,4,5,6,7,8,9,10,11];
     for (var i = 0; i < bookArray.length; i++) {
         var bookListItemEl = document.createElement('li');
-        bookListItemEl.textContent = data.works[i].title;
+        var bookListImageEl = document.createElement('img');
+        var bookListTitleEl = document.createElement('p');
+        var bookListAuthorEl = document.createElement('p');
+        
+        bookListImageEl.src = "https://covers.openlibrary.org/b/id/" + data.works[i].cover_id + "-M.jpg"; //M is medium. S would be small. L would be large.
+        bookListTitleEl.textContent = data.works[i].title 
+        bookListAuthorEl.textContent = "by " + data.works[i].authors[0].name;
+
         bookListItemEl.classList = 'book-list-item';
+        bookListImageEl.classList = 'book-list-image';
+        bookListTitleEl.classList = 'book-list-title';
+        bookListAuthorEl.classList = 'book-list-author';
+
+        bookListTitleEl.appendChild(bookListAuthorEl);
+        bookListItemEl.appendChild(bookListImageEl);
+        bookListItemEl.appendChild(bookListTitleEl);
+        //Attaching list item to universal ul element
         bookListEl.appendChild(bookListItemEl);
     }
 
-    resourcesHeaderEl.appendChild(bookListEl);
-    resourcesContainerEl.appendChild(resourcesHeaderEl);
-    topicContainer.appendChild(resourcesContainerEl);
+    recommendationHeaderEl.appendChild(bookListEl);
+    booksContainer.appendChild(recommendationHeaderEl);
 }
-
-
 
 function searchMathImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=calculus&format=json&nojsoncallback=1';
-
 
     fetch(apiUrl)
         .then(function (response) {
@@ -175,13 +121,11 @@ function searchMathImage() {
         .catch(function (error) {
             alert('Unable to connect to API');
             });
-
 }
 
 function searchScienceImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=science&format=json&nojsoncallback=1';
 
-
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
@@ -197,13 +141,11 @@ function searchScienceImage() {
         .catch(function (error) {
             alert('Unable to connect to API');
             });
-
 }
 
 function searchLiteratureImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=books&format=json&nojsoncallback=1';
 
-
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
@@ -219,13 +161,11 @@ function searchLiteratureImage() {
         .catch(function (error) {
             alert('Unable to connect to API');
             });
-
 }
 
 function searchHistoryImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=history&format=json&nojsoncallback=1';
 
-
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
@@ -241,7 +181,6 @@ function searchHistoryImage() {
         .catch(function (error) {
             alert('Unable to connect to API');
             });
-
 }
 
 

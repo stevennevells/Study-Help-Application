@@ -36,12 +36,12 @@ The JavaScript document includes:
 - JavaScript
 
 ## Links
-* [Deployed webpage](placeholder link)
+* [Deployed-webpage](https://stevennevells.github.io/Super-Duper-Project/)
 
 * [Repository](https://github.com/stevennevells/Super-Duper-Project)
 
 ## Screenshot
-![image](./assets/images/readme-screenshot.png)
+![Image](./assets/imgs/site-example.png)
 
 ## Credit
 Villette Comfort

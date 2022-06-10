@@ -5,42 +5,43 @@
     <meta charset="UTF-8" />
     <title>Study Help</title>
     <meta name="description" content="Generator to help find resources for different school subjects.">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <!-- Bulma Documentation: https://bulma.io/documentation/overview/classes/ -->
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body>
+    <section class="hero is-warning">
+        <div class="hero-body is-halfheight">
+            <p class="title">
+                Struggling to stay on top of your school work?
+            </p>
+            <p class="subtitle">
+                Checkout some topics below to freshen up!
+            </p>
+        </div>
+    </section>
 
-    
-<section class="hero is-warning is-halfheight">
-    <div class="hero-body">
-      <div class="">
-        <p class="title">
-            Struggling to stay on top of your school work?
-        </p>
-        <p class="subtitle">
-            Checkout some topics below to freshen up!
-        </p>
-      </div>
-  </div>
+    <main>
+        <div class='display-container columns'>
+            <div class='button-container column is-one-quarter'>
+                <button class="button is-large is-fullwidth math-button">Math</button>
+                <button class="button is-large is-fullwidth history-button">History</button>
+                <button class="button is-large is-fullwidth science-button">Science</button>
+                <button class="button is-large is-fullwidth literature-button">Literature</button>
+            </div>
 
-  <div class = 'display-container columns'>
-    <div class = 'button-container column is-one-quarter'> 
-    <button class="button is-large is-fullwidth math-button">Mathematics Resources</button>
-    <button class="button is-large is-fullwidth history-button">History Resources</button>
-    <button class="button is-large is-fullwidth science-button">Science Resources</button>
-    <button class="button is-large is-fullwidth literature-button">Literature Resources</button>
-    </div>
-    
 
-    <div class="topic-container is-three-quarters" >
+            <div class="books-container column is-two-fifths">
+                <!-- Books will populate here -->
+            </div>
 
-        <!-- div will popluate here for image -->
-        <!-- div will populate here for book-list -->
-        
-    </div>
-    </div>
-    <script src="./assets/js/script.js"></script>
+            <div class="image-container column is-two-fifths">
+                <!-- Image will populate here -->
+            </div>
+        </div>
+    </main>
+<script src="./assets/js/script.js"></script>
 </body>
 
 </html>

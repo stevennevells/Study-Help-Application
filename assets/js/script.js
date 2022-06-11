@@ -10,11 +10,13 @@ var heroContainer = document.querySelector('.hero');
 var savedBooksContainer = document.querySelector('.saved-books-container');
 var savedBookListHeader = document.querySelector('.saved-book-list-header');
 
+
 // Event listeners
 mathButton.addEventListener('click', mathFunc);
 literatureButton.addEventListener('click', literatureFunc);
 scienceButton.addEventListener('click', scienceFunc);
 historyButton.addEventListener('click', historyFunc);
+
 
 
 function mathFunc(){
@@ -95,17 +97,21 @@ function displayBooks(data) {
         var bookListImageEl = document.createElement('img');
         var bookListTitleEl = document.createElement('p');
         var bookListAuthorEl = document.createElement('p');
+        var saveButton = document.createElement('button');
         
         bookListImageEl.src = "https://covers.openlibrary.org/b/id/" + data.works[i].cover_id + "-M.jpg"; //M is medium. S would be small. L would be large.
         bookListTitleEl.textContent = data.works[i].title 
         bookListAuthorEl.textContent = "by " + data.works[i].authors[0].name;
+        saveButton.textContent = 'Save Book';
 
         bookListItemEl.classList = 'book-list-item';
         bookListImageEl.classList = 'book-list-image';
         bookListTitleEl.classList = 'book-list-title';
         bookListAuthorEl.classList = 'book-list-author';
+        saveButton.classList = 'save-button';
 
         bookListTitleEl.appendChild(bookListAuthorEl);
+        bookListTitleEl.appendChild(saveButton);
         bookListItemEl.appendChild(bookListImageEl);
         bookListItemEl.appendChild(bookListTitleEl);
         //Attaching list item to universal ul element
@@ -115,6 +121,8 @@ function displayBooks(data) {
     recommendationHeaderEl.appendChild(bookListEl);
     booksContainer.appendChild(recommendationHeaderEl);
     savedBooksContainer.appendChild(savedBookListHeader);
+
+    saveButton.addEventListener('click', addBookToSavedList);
 }
 
 function searchMathImage() {
@@ -331,3 +339,11 @@ function displayTrivia(data) {
     buttonContainer.appendChild(falseButtonEl);
     triviaContainer.appendChild(buttonContainer);
 }
+
+
+function addBookToSavedList(){
+    var buttonText = event.target.textContent;
+    console.log(buttonText);
+    
+ }
+

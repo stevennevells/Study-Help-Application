@@ -3,7 +3,9 @@ var literatureButton= document.querySelector('.literature-button');
 var scienceButton= document.querySelector('.science-button');
 var historyButton = document.querySelector('.history-button');
 var booksContainer = document.querySelector('.books-container');
+var imageAndTriviaContainer = document.querySelector('.image-trivia-container');
 var imageContainer = document.querySelector('.image-container');
+var triviaContainer = document.querySelector('.trivia-container');
 
 // Event listeners
 mathButton.addEventListener('click', mathFunc);
@@ -43,6 +45,7 @@ function historyFunc(){
 function clearScreen() {
     booksContainer.textContent = '';
     imageContainer.textContent = '';
+    triviaContainer.textContent = '';
 }
 
 function searchBooks () {
@@ -198,7 +201,6 @@ function displayImage(data){
     imageEl.src = "https://live.staticflickr.com/" + serverId + "/" + photoId + "_" + secret + ".jpg";
     imageEl.classList = 'flickr-img';
     imageContainer.appendChild(imageEl);
-
 }
 
 function searchTriviaMath(){
@@ -210,7 +212,7 @@ function searchTriviaMath(){
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //displayTrivia(data);
+                    displayTrivia(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -230,7 +232,7 @@ function searchTriviaLiterature(){
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //displayTrivia(data);
+                    displayTrivia(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -250,7 +252,7 @@ function searchTriviaScience(){
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //displayTrivia(data);
+                    displayTrivia(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -270,7 +272,7 @@ function searchTriviaHistory(){
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    //displayTrivia(data);
+                    displayTrivia(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -281,3 +283,41 @@ function searchTriviaHistory(){
             });
 }
 
+function displayTrivia(data) {
+    var triviaQuestionEl = document.createElement('p');
+    var triviaDirectionsEl = document.createElement('p');
+    var buttonContainer = document.createElement('div');
+    var trueButtonEl = document.createElement('button');
+    var falseButtonEl =  document.createElement('button');
+
+    triviaQuestionEl.textContent = data.results[0].question;
+    triviaDirectionsEl.textContent = "(Hover over your choice to see if you're correct)";
+    trueButtonEl.textContent = "True";
+    falseButtonEl.textContent = "False";
+    
+    triviaQuestionEl.classList = 'trivia-question';
+    
+    var correct = data.results[0].correct_answer;
+    var trueButtonText = trueButtonEl.textContent;
+    var falseButtonText = falseButtonEl.textContent;
+
+    if ( trueButtonText === correct) {
+        trueButtonEl.classList = "correct";
+    }
+    else {
+        trueButtonEl.classList = "wrong";
+    }
+
+    if ( falseButtonText === correct) {
+        falseButtonEl.classList = "correct";
+    }
+    else {
+        falseButtonEl.classList = "wrong";
+    }
+    
+    triviaContainer.appendChild(triviaQuestionEl);
+    triviaContainer.appendChild(triviaDirectionsEl);
+    buttonContainer.appendChild(trueButtonEl);
+    buttonContainer.appendChild(falseButtonEl);
+    triviaContainer.appendChild(buttonContainer);
+}

@@ -5,48 +5,54 @@
     <meta charset="UTF-8" />
     <title>Study Help</title>
     <meta name="description" content="Generator to help find resources for different school subjects.">
-       <!-- Bulma Documentation: https://bulma.io/documentation/overview/classes/ -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" /> -->
+    <!-- Bulma Documentation: https://bulma.io/documentation/overview/classes/ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
 <body>
+  
+    <div class='button-container columns'>
+        <a href="#display" class="button column is-one-fourth is-large math-button">Math</a>
+        <a href="#display" class="button column is-one-fourth is-large history-button">History</a>
+        <a href="#display" class="button column is-one-fourth is-large science-button">Science</a>
+        <a href="#display" class="button column is-one-fourth is-large literature-button">Literature</a>
+    </div>
+
     <section class="hero is-warning">
         <div class="hero-body is-halfheight">
             <p class="title">
                 Struggling to stay on top of your school work?
             </p>
             <p class="subtitle">
-                Checkout some topics below to freshen up!
+                Checkout some books to freshen up!
             </p>
         </div>
     </section>
 
     <main>
+
         <div class='display-container columns'>
-            <div class='button-container column is-one-quarter'>
-                <button class="button is-large is-fullwidth math-button">Math</button>
-                <button class="button is-large is-fullwidth history-button">History</button>
-                <button class="button is-large is-fullwidth science-button">Science</button>
-                <button class="button is-large is-fullwidth literature-button">Literature</button>
+
+            <div class="image-trivia-container column is-half">
+                <div class="image-container">
+                    <!-- Image will populate here -->
+                </div>
+                <div class="trivia-container">
+                    <!-- Trivia question will populate here -->
+                </div>
+                <div class="saved-books-container">
+                    <h3 class="saved-book-list-header"></h3>
+                    <!-- saved book list will populate here -->
+                </div>
             </div>
 
-
-            <div class="books-container column is-two-fifths">
+            <div id="display" class="books-container column is-half">
                 <!-- Books will populate here -->
-            </div>
-
-            <div class = "image-trivia-container column is-two-fifths">
-                <div class= "image-container">
-                <!-- Image will populate here -->
-                </div>
-                <div class = "trivia-container">
-                <!-- Trivia question will populate here -->
-                </div>
             </div>
         </div>
     </main>
-<script src="./assets/js/script.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>

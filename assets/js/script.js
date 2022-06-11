@@ -112,7 +112,7 @@ function searchMathImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    // displayImage(data);
+                    displayImage(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -124,7 +124,7 @@ function searchMathImage() {
 }
 
 function searchScienceImage() {
-    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=science&format=json&nojsoncallback=1';
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=chemistry&format=json&nojsoncallback=1';
 
     fetch(apiUrl)
         .then(function (response) {
@@ -132,7 +132,7 @@ function searchScienceImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    // displayImage(data);
+                    displayImage(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -144,7 +144,7 @@ function searchScienceImage() {
 }
 
 function searchLiteratureImage() {
-    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=books&format=json&nojsoncallback=1';
+    var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=bookpages&format=json&nojsoncallback=1';
 
     fetch(apiUrl)
         .then(function (response) {
@@ -152,7 +152,7 @@ function searchLiteratureImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    // displayImage(data);
+                    displayImage(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -172,7 +172,7 @@ function searchHistoryImage() {
                 console.log(response);
                 response.json().then(function (data) {
                     console.log(data);
-                    // displayImage(data);
+                    displayImage(data);
                 });
             } else {
                 alert('Error: ' + response.statusText);
@@ -183,4 +183,17 @@ function searchHistoryImage() {
             });
 }
 
+
+function displayImage(data){
+    var imageEl = document.createElement('img');
+    var secret = data.photos.photo[5].secret;
+    var photoId = data.photos.photo[5].id;
+    var serverId = data.photos.photo[5].server;
+
+
+    imageEl.src = "https://live.staticflickr.com/" + serverId + "/" + photoId + "_" + secret + ".jpg";
+    imageEl.classList = 'flickr-img';
+    imageContainer.appendChild(imageEl);
+
+}
 

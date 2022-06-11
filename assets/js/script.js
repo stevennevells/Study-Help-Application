@@ -95,6 +95,7 @@ function displayBooks(data) {
     for (var i = 0; i < bookArray.length; i++) {
         var bookListItemEl = document.createElement('li');
         var bookListImageEl = document.createElement('img');
+        var bookListInfoEl = document.createElement('div');
         var bookListTitleEl = document.createElement('p');
         var bookListAuthorEl = document.createElement('p');
         var saveButton = document.createElement('button');
@@ -106,24 +107,43 @@ function displayBooks(data) {
 
         bookListItemEl.classList = 'book-list-item';
         bookListImageEl.classList = 'book-list-image';
+        bookListInfoEl.classList = 'book-list-info-div'
         bookListTitleEl.classList = 'book-list-title';
         bookListAuthorEl.classList = 'book-list-author';
         saveButton.classList = 'save-button';
 
-        bookListTitleEl.appendChild(bookListAuthorEl);
-        bookListTitleEl.appendChild(saveButton);
+        bookListInfoEl.appendChild(bookListTitleEl);
+        bookListInfoEl.appendChild(bookListAuthorEl);
+        bookListInfoEl.appendChild(saveButton);
         bookListItemEl.appendChild(bookListImageEl);
-        bookListItemEl.appendChild(bookListTitleEl);
+        bookListItemEl.appendChild(bookListInfoEl);
         //Attaching list item to universal ul element
         bookListEl.appendChild(bookListItemEl);
+
+        saveButton.addEventListener('click', addBookToSavedList);
     }
 
     recommendationHeaderEl.appendChild(bookListEl);
     booksContainer.appendChild(recommendationHeaderEl);
     savedBooksContainer.appendChild(savedBookListHeader);
-
-    saveButton.addEventListener('click', addBookToSavedList);
 }
+
+function addBookToSavedList() {
+    var bookText = event.target.parentElement.childNodes[0].innerText;
+    var savedBookList = document.createElement('ul');
+    var savedBookItem = document.createElement('li');
+
+    savedBookItem.classList = 'saved-book-item'; 
+    savedBookItem.textContent = bookText;
+
+    savedBookList.appendChild(savedBookItem);
+    savedBookListHeader.appendChild(savedBookList);
+    // saveToLocalStorage(bookText);
+}
+
+// function saveToLocalStorage (bookTitle) {
+//    localStorage.setItem
+// }
 
 function searchMathImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=calculus&format=json&nojsoncallback=1';
@@ -204,7 +224,6 @@ function searchHistoryImage() {
             alert('Unable to connect to API');
             });
 }
-
 
 function displayImage(data){
     var imageEl = document.createElement('img');
@@ -339,11 +358,3 @@ function displayTrivia(data) {
     buttonContainer.appendChild(falseButtonEl);
     triviaContainer.appendChild(buttonContainer);
 }
-
-
-function addBookToSavedList(){
-    var buttonText = event.target.textContent;
-    console.log(buttonText);
-    
- }
-

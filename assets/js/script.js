@@ -16,24 +16,28 @@ function mathFunc(){
     clearScreen();
     searchBooks();
     searchMathImage();
+    searchTriviaMath();
 }
 
 function literatureFunc(){
     clearScreen();
     searchBooks();
     searchLiteratureImage();
+    searchTriviaLiterature();
 }
 
 function scienceFunc(){
     clearScreen();
     searchBooks();
     searchScienceImage();
+    searchTriviaScience();
 }
 
 function historyFunc(){
     clearScreen();
     searchBooks();
     searchHistoryImage();
+    searchTriviaHistory();
 }
 
 function clearScreen() {
@@ -195,5 +199,85 @@ function displayImage(data){
     imageEl.classList = 'flickr-img';
     imageContainer.appendChild(imageEl);
 
+}
+
+function searchTriviaMath(){
+    var apiUrl = 'https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=boolean';
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //displayTrivia(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+}
+
+function searchTriviaLiterature(){
+    var apiUrl = 'https://opentdb.com/api.php?amount=10&category=20&difficulty=easy&type=boolean';
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //displayTrivia(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+}
+
+function searchTriviaScience(){
+    var apiUrl = 'https://opentdb.com/api.php?amount=1&category=17&difficulty=easy&type=boolean';
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //displayTrivia(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
+}
+
+function searchTriviaHistory(){
+    var apiUrl = 'https://opentdb.com/api.php?amount=1&category=23&difficulty=easy&type=boolean';
+
+    fetch(apiUrl)
+        .then(function (response) {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                    console.log(data);
+                    //displayTrivia(data);
+                });
+            } else {
+                alert('Error: ' + response.statusText);
+            }
+        })
+        .catch(function (error) {
+            alert('Unable to connect to API');
+            });
 }
 

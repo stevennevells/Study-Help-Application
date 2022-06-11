@@ -6,6 +6,9 @@ var booksContainer = document.querySelector('.books-container');
 var imageAndTriviaContainer = document.querySelector('.image-trivia-container');
 var imageContainer = document.querySelector('.image-container');
 var triviaContainer = document.querySelector('.trivia-container');
+var heroContainer = document.querySelector('.hero');
+var savedBooksContainer = document.querySelector('.saved-books-container');
+var savedBookListHeader = document.querySelector('.saved-book-list-header');
 
 // Event listeners
 mathButton.addEventListener('click', mathFunc);
@@ -46,6 +49,8 @@ function clearScreen() {
     booksContainer.textContent = '';
     imageContainer.textContent = '';
     triviaContainer.textContent = '';
+    heroContainer.remove();
+    savedBookListHeader.textContent = '';
 }
 
 function searchBooks () {
@@ -77,7 +82,8 @@ function displayBooks(data) {
     var recommendationHeaderEl = document.createElement('h3');
     var bookListEl = document.createElement('ul');
     
-    recommendationHeaderEl.textContent = 'Recommended Books:';;
+    recommendationHeaderEl.textContent = 'Recommended Books:';
+    savedBookListHeader.textContent = 'Saved Book List:';
 
     recommendationHeaderEl.classList = 'recommendations-header';
     bookListEl.classList = 'book-list-ul';
@@ -108,6 +114,7 @@ function displayBooks(data) {
 
     recommendationHeaderEl.appendChild(bookListEl);
     booksContainer.appendChild(recommendationHeaderEl);
+    savedBooksContainer.appendChild(savedBookListHeader);
 }
 
 function searchMathImage() {
@@ -224,8 +231,7 @@ function searchTriviaMath(){
 }
 
 function searchTriviaLiterature(){
-    var apiUrl = 'https://opentdb.com/api.php?amount=10&category=20&difficulty=easy&type=boolean';
-
+    var apiUrl = 'https://opentdb.com/api.php?amount=1&category=10&difficulty=easy&type=boolean';
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
@@ -284,17 +290,20 @@ function searchTriviaHistory(){
 }
 
 function displayTrivia(data) {
+    var triviaDescription = document.createElement('p');
     var triviaQuestionEl = document.createElement('p');
     var triviaDirectionsEl = document.createElement('p');
     var buttonContainer = document.createElement('div');
     var trueButtonEl = document.createElement('button');
     var falseButtonEl =  document.createElement('button');
 
+    triviaDescription.textContent = 'Trivia Question:';
     triviaQuestionEl.textContent = data.results[0].question;
     triviaDirectionsEl.textContent = "(Hover over your choice to see if you're correct)";
     trueButtonEl.textContent = "True";
     falseButtonEl.textContent = "False";
     
+    triviaDescription.classList = 'trivia-description';
     triviaQuestionEl.classList = 'trivia-question';
     
     var correct = data.results[0].correct_answer;
@@ -315,6 +324,7 @@ function displayTrivia(data) {
         falseButtonEl.classList = "wrong";
     }
     
+    triviaContainer.appendChild(triviaDescription);
     triviaContainer.appendChild(triviaQuestionEl);
     triviaContainer.appendChild(triviaDirectionsEl);
     buttonContainer.appendChild(trueButtonEl);

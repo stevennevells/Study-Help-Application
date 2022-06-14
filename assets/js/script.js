@@ -9,7 +9,8 @@ var triviaContainer = document.querySelector('.trivia-container');
 var heroContainer = document.querySelector('.hero');
 var savedBooksContainer = document.querySelector('.saved-books-container');
 var savedBookListHeader = document.querySelector('.saved-book-list-header');
-
+var savedBookTitle = document.querySelector('.saved-book-title');
+var bookTitleArray;
 
 // Event listeners
 mathButton.addEventListener('click', mathFunc);
@@ -17,13 +18,14 @@ literatureButton.addEventListener('click', literatureFunc);
 scienceButton.addEventListener('click', scienceFunc);
 historyButton.addEventListener('click', historyFunc);
 
-
+//document.addEventListener('DOMContentLoaded', loadLocalStorage); 
 
 function mathFunc(){
     clearScreen();
     searchBooks();
     searchMathImage();
     searchTriviaMath();
+    loadLocalStorage();
 }
 
 function literatureFunc(){
@@ -31,6 +33,7 @@ function literatureFunc(){
     searchBooks();
     searchLiteratureImage();
     searchTriviaLiterature();
+
 }
 
 function scienceFunc(){
@@ -52,7 +55,8 @@ function clearScreen() {
     imageContainer.textContent = '';
     triviaContainer.textContent = '';
     heroContainer.remove();
-    savedBookListHeader.textContent = '';
+
+    //savedBookListHeader.textContent = '';
 }
 
 function searchBooks () {
@@ -127,8 +131,10 @@ function displayBooks(data) {
     booksContainer.appendChild(recommendationHeaderEl);
     savedBooksContainer.appendChild(savedBookListHeader);
 }
+       
 
-function addBookToSavedList() {
+function addBookToSavedList(event) {
+    event.preventDefault();
     var bookText = event.target.parentElement.childNodes[0].innerText;
     var savedBookList = document.createElement('ul');
     var savedBookItem = document.createElement('li');
@@ -138,12 +144,39 @@ function addBookToSavedList() {
 
     savedBookList.appendChild(savedBookItem);
     savedBookListHeader.appendChild(savedBookList);
-    // saveToLocalStorage(bookText);
+    saveToLocalStorage(bookText);
 }
 
-// function saveToLocalStorage (bookTitle) {
-//    localStorage.setItem
-// }
+function saveToLocalStorage (bookTitle) {   
+     if (!bookTitleArray.includes(bookTitle)){
+         bookTitleArray.push(bookTitle);
+         localStorage.setItem('Book Title', JSON.stringify(bookTitleArray));
+     }
+ }
+ function appendBook (bookTitle){
+     console.log(bookTitle);
+     var savedBookList = document.createElement('ul');
+     var savedBookItem = document.createElement('li');
+ 
+     savedBookItem.classList = 'saved-book-item'; 
+     savedBookItem.textContent = bookTitle;
+ 
+     savedBookList.appendChild(savedBookItem);
+     savedBookListHeader.appendChild(savedBookList);
+ }
+ 
+ 
+ function loadLocalStorage(){
+     if(localStorage.getItem('Book Title') === null){
+         bookTitleArray = [];
+     }
+     else{
+         bookTitleArray = JSON.parse(localStorage.getItem('Book Title'));
+     }
+     bookTitleArray.forEach((bookTitle) => appendBook(bookTitle));
+ }
+
+
 
 function searchMathImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=calculus&format=json&nojsoncallback=1';

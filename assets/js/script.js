@@ -1,6 +1,8 @@
-var mathButton= document.querySelector('.math-button');
-var literatureButton= document.querySelector('.literature-button');
-var scienceButton= document.querySelector('.science-button');
+// Universal Variables
+var main = document.querySelector('.main');
+var mathButton = document.querySelector('.math-button');
+var literatureButton = document.querySelector('.literature-button');
+var scienceButton = document.querySelector('.science-button');
 var historyButton = document.querySelector('.history-button');
 var booksContainer = document.querySelector('.books-container');
 var imageContainer = document.querySelector('.image-container');
@@ -9,15 +11,23 @@ var savedBooksContainer = document.querySelector('.saved-books-container');
 var heroContainer = document.querySelector('.hero');
 var savedBookListHeader = document.querySelector('.saved-book-list-header');
 var savedBooksUl = document.querySelector('.saved-books-ul');
-var bookTitleArray;
+var bookTitleArray; //For local storage
 
-// Event listeners
+//Initial screenload
+document.addEventListener('DOMContentLoaded', hideContainers);
+
+function hideContainers () {
+    // In order to initially hide the dotted border on this container
+    triviaContainer.style.display = 'none';
+}
+
+// Subject Button Event listeners
 mathButton.addEventListener('click', mathFunc);
 literatureButton.addEventListener('click', literatureFunc);
 scienceButton.addEventListener('click', scienceFunc);
 historyButton.addEventListener('click', historyFunc);
 
-function mathFunc(){
+function mathFunc() {
     loadLocalStorage();
     clearScreen();
     searchBooks();
@@ -25,7 +35,7 @@ function mathFunc(){
     searchTriviaMath();
 }
 
-function literatureFunc(){
+function literatureFunc() {
     loadLocalStorage();
     clearScreen();
     searchBooks();
@@ -34,7 +44,7 @@ function literatureFunc(){
 
 }
 
-function scienceFunc(){
+function scienceFunc() {
     loadLocalStorage();
     clearScreen();
     searchBooks();
@@ -42,7 +52,7 @@ function scienceFunc(){
     searchTriviaScience();
 }
 
-function historyFunc(){
+function historyFunc() {
     loadLocalStorage();
     clearScreen();
     searchBooks();
@@ -57,7 +67,8 @@ function clearScreen() {
     heroContainer.remove();
 }
 
-function searchBooks () {
+// Grabs data from library api and then displays book results
+function searchBooks() {
     var buttonText = event.target.textContent;
     var lowercaseButtonText = buttonText.toLowerCase();
     console.log(buttonText)
@@ -78,14 +89,14 @@ function searchBooks () {
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
 // Function for populating screen with book list
 function displayBooks(data) {
     var recommendationHeaderEl = document.createElement('h3');
     var bookListEl = document.createElement('ul');
-    
+
     recommendationHeaderEl.textContent = 'Recommended Books:';
     savedBookListHeader.textContent = 'Saved Book List:';
 
@@ -93,7 +104,7 @@ function displayBooks(data) {
     bookListEl.classList = 'book-list-ul';
 
 
-    var bookArray = [0,1,2,3,4,5,6,7,8,9,10,11];
+    var bookArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     for (var i = 0; i < bookArray.length; i++) {
         var bookListItemEl = document.createElement('li');
         var bookListImageEl = document.createElement('img');
@@ -101,9 +112,9 @@ function displayBooks(data) {
         var bookListTitleEl = document.createElement('p');
         var bookListAuthorEl = document.createElement('p');
         var saveButton = document.createElement('button');
-        
+
         bookListImageEl.src = "https://covers.openlibrary.org/b/id/" + data.works[i].cover_id + "-M.jpg"; //M is medium. S would be small. L would be large.
-        bookListTitleEl.textContent = data.works[i].title 
+        bookListTitleEl.textContent = data.works[i].title
         bookListAuthorEl.textContent = "by " + data.works[i].authors[0].name;
         saveButton.textContent = 'Save Book';
 
@@ -129,55 +140,52 @@ function displayBooks(data) {
     booksContainer.appendChild(recommendationHeaderEl);
 }
 
+// Saves book to local storage. Within saveToLocalStorage is the function for loading local storage as well which also appends the list from local storage.
 function addBookToSavedList(event) {
     var bookText = event.target.parentElement.childNodes[0].innerText;
-    var savedBookItem = document.createElement('li');
-
-    savedBookItem.classList = 'saved-book-item'; 
-    savedBookItem.textContent = bookText;
-
-    savedBooksUl.appendChild(savedBookItem);
     saveToLocalStorage(bookText);
 }
 
-function saveToLocalStorage (bookTitle) {   
-     if (!bookTitleArray.includes(bookTitle)){
-         bookTitleArray.push(bookTitle);
-         localStorage.setItem('Book Title', JSON.stringify(bookTitleArray));
-     }
- }
+function saveToLocalStorage(bookTitle) {
+    // Only add a book to the local storage array if it isn't already there
+    if (!bookTitleArray.includes(bookTitle)) {
+        bookTitleArray.push(bookTitle);
+        localStorage.setItem('Book Title', JSON.stringify(bookTitleArray));
+    }
+    loadLocalStorage();
+}
 
+// To prevent duplicate lists, removing the li's from the ul first
 function removeChilds(parent) {
     while (parent.lastChild) {
         parent.removeChild(parent.lastChild);
     }
 }
 
-
-  
- function loadLocalStorage(){
+function loadLocalStorage() {
     removeChilds(savedBooksUl);
 
-     if(localStorage.getItem('Book Title') === null){
-         bookTitleArray = [];
-     }
-     else{
-         bookTitleArray = JSON.parse(localStorage.getItem('Book Title'));
-     }
-     bookTitleArray.forEach((bookTitle) => appendBook(bookTitle));
- }
+    if (localStorage.getItem('Book Title') === null) {
+        bookTitleArray = [];
+    }
+    else {
+        bookTitleArray = JSON.parse(localStorage.getItem('Book Title'));
+    }
+    // For each book title, add it to the list on the screen
+    bookTitleArray.forEach((bookTitle) => appendBook(bookTitle));
+}
 
- function appendBook (bookTitle){
+// Adding book to saved list on screen for user
+function appendBook(bookTitle) {
     var savedBookItem = document.createElement('li');
 
-    savedBookItem.classList = 'saved-book-item'; 
+    savedBookItem.classList = 'saved-book-item';
     savedBookItem.textContent = bookTitle;
 
     savedBooksUl.appendChild(savedBookItem);
 }
 
-
-
+//Pulling images, by subject, from the Flickr API
 function searchMathImage() {
     var apiUrl = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=02c71edd48d48cb1a4938d2774e11f66&tags=calculus&format=json&nojsoncallback=1';
 
@@ -195,7 +203,7 @@ function searchMathImage() {
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
 function searchScienceImage() {
@@ -215,7 +223,7 @@ function searchScienceImage() {
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
 function searchLiteratureImage() {
@@ -235,7 +243,7 @@ function searchLiteratureImage() {
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
 function searchHistoryImage() {
@@ -255,10 +263,10 @@ function searchHistoryImage() {
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
-function displayImage(data){
+function displayImage(data) {
     var imageEl = document.createElement('img');
     var secret = data.photos.photo[5].secret;
     var photoId = data.photos.photo[5].id;
@@ -270,7 +278,8 @@ function displayImage(data){
     imageContainer.appendChild(imageEl);
 }
 
-function searchTriviaMath(){
+// Pulling trivia questions, by subject, from the trivia game API
+function searchTriviaMath() {
     var apiUrl = 'https://opentdb.com/api.php?amount=1&category=19&difficulty=easy&type=boolean';
 
     fetch(apiUrl)
@@ -287,10 +296,10 @@ function searchTriviaMath(){
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
-function searchTriviaLiterature(){
+function searchTriviaLiterature() {
     var apiUrl = 'https://opentdb.com/api.php?amount=1&category=10&difficulty=easy&type=boolean';
     fetch(apiUrl)
         .then(function (response) {
@@ -306,10 +315,10 @@ function searchTriviaLiterature(){
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
-function searchTriviaScience(){
+function searchTriviaScience() {
     var apiUrl = 'https://opentdb.com/api.php?amount=1&category=17&difficulty=easy&type=boolean';
 
     fetch(apiUrl)
@@ -326,10 +335,10 @@ function searchTriviaScience(){
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
-function searchTriviaHistory(){
+function searchTriviaHistory() {
     var apiUrl = 'https://opentdb.com/api.php?amount=1&category=23&difficulty=easy&type=boolean';
 
     fetch(apiUrl)
@@ -346,44 +355,49 @@ function searchTriviaHistory(){
         })
         .catch(function (error) {
             alert('Unable to connect to API');
-            });
+        });
 }
 
+// Displaying a trivia question and true/false option to the screen
 function displayTrivia(data) {
+    // Now show the border
+    triviaContainer.style.display = 'block';
+
     var triviaDescription = document.createElement('p');
     var triviaQuestionEl = document.createElement('p');
     var triviaDirectionsEl = document.createElement('p');
     var buttonContainer = document.createElement('div');
     var trueButtonEl = document.createElement('button');
-    var falseButtonEl =  document.createElement('button');
+    var falseButtonEl = document.createElement('button');
 
     triviaDescription.textContent = 'Trivia Question:';
     triviaQuestionEl.textContent = data.results[0].question;
     triviaDirectionsEl.textContent = "(Hover over your choice to see if you're correct)";
     trueButtonEl.textContent = "True";
     falseButtonEl.textContent = "False";
-    
+
     triviaDescription.classList = 'trivia-description';
     triviaQuestionEl.classList = 'trivia-question';
-    
+
     var correct = data.results[0].correct_answer;
     var trueButtonText = trueButtonEl.textContent;
     var falseButtonText = falseButtonEl.textContent;
 
-    if ( trueButtonText === correct) {
+    // If correct, the answer will be green on hover. If wrong, it will be red.
+    if (trueButtonText === correct) {
         trueButtonEl.classList = "correct";
     }
     else {
         trueButtonEl.classList = "wrong";
     }
 
-    if ( falseButtonText === correct) {
+    if (falseButtonText === correct) {
         falseButtonEl.classList = "correct";
     }
     else {
         falseButtonEl.classList = "wrong";
     }
-    
+
     triviaContainer.appendChild(triviaDescription);
     triviaContainer.appendChild(triviaQuestionEl);
     triviaContainer.appendChild(triviaDirectionsEl);

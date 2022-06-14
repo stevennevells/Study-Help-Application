@@ -1,10 +1,10 @@
-# School Resources
+# Study Help
 
 ## Website Description
-When pressing a button that indicates their desired subject, users are presented with books , a randomly generated photo, and trivia question that all relate to desired subject. Users may save and view a list of books that interest them. 
+This website application is a study helper for students with their school subjects. When pressing a button that indicates their desired subject, users are presented with recommended books, a photo, and a trivia question from that subject. Users may save and view a list of books that interest them. 
 
 ## Challenge Description
-The API for Flickr is used to display a subject image and the API from Open Library is used to display a list of school subject resources. An API that generates a random trivia question is used as well. Local storage is used to save a list of books chosen by the user.
+Three API's are used to generate the user desired subject matter. An API from Flickr is used for the subject image, an API from OpenLibrary is used for the subject books, and an API from Open Trivia Database is used for the subject trivia question. Local storage is used to save a list of books chosen by the user and populate the list to the left column of the screen. Users can save books from multiple subjects to this list. The CSS Framework that was used is Bulma. The user input and interactivity is their desired school subject as well as selected books and trivia choice. The responsive view is that the buttons and columns align vertically when reduced to a mobile screen size.  Future expansion of the application could include more school subjects or extracurricular subjects such as health, physical education, art, theatre, or psychology.
 
 ## Acceptance Criteria
 
@@ -25,30 +25,41 @@ Have a quality README (with unique name, description, technologies used, screens
 ## Tasks Completed
 The HTML document includes:
 * a proper title and SEO metadata
-* links to stylesheet, css, and bulma
+* proper semantic labelling and organization of elements
+* placeholders within element containers for future JavaScript dynamic HTML
+* links to stylesheet, custom css, and Bulma CSS library
+* comments
 
 The CSS document includes:
-* classes that cover everything from the hero header to individual containers, button characteristics, background colors, and font colors and sizes.  
+* universal variables for repeated colors
+* elements for styling
+* classes that include the hero, trivia/image/booklist containers, buttons, etc.
+* hover classes for various colors to display via JavaScript If/Else statements
+* dynamically changed CSS for elements to display or hide in visibility
+* comments
 
 The JavaScript document includes:
-* variables that cover containers, buttons, and headers
-* functions that cover fetching, searching, populating, saving, and clearing data
+* variables for query selectors, creating elements, and creating arrays
+* functions that cover removing, fetching, populating, and saving elements or data
+* three API's that have data fetched and utilized to be displayed on the screen via user input
+* localStorage saving, retrieval, and displaying
 
 ## Languages
 - HTML
 - CSS
 - JavaScript
-- Bulma
 
 ## Links
-* [Deployed-webpage](https://stevennevells.github.io/Super-Duper-Project/)
+* [Deployed-webpage](https://stevennevells.github.io/Study-Help-Application/)
 
-* [Repository](https://github.com/stevennevells/Super-Duper-Project)
+* [Repository](https://github.com/stevennevells/Study-Help-Application)
 
 ## Screenshot
-![Image](./assets/imgs/image%20(1).png)
+![Image](./assets/imgs/readme-screenshot.png)
 
 ## Credit
 Villette Comfort
+
 Alexia Valenzuela
+
 Steven Nevells

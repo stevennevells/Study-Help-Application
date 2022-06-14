@@ -4,39 +4,50 @@
 --red: rgb(255, 0, 0);
 }
 
+body {
+    background-color: rgb(84, 178, 144);
+}
 
 main {
     background-color: rgb(84, 178, 144);
-    padding: 45px;
-    padding-top: 100px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 40px;
 }
 
+/* Introduction page with the yellow background */
 .hero {
     height: 300px;
+    margin-top: 80px;
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
 .title {
     padding-top: 45px;
 }
 
+/* Recommended Books: */
+.recommendations-header {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+/* Grid/Columns of recommended books */
 .book-list-ul {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 2fr);
     grid-template-rows: repeat(6, 175px); 
-    grid-gap: 10px;
+    grid-gap: 5px;
     grid-auto-flow: dense;
 }
 
+/* Each individual recommended book */
 .book-list-item {
 display: flex;
-margin: 1rem;
 align-items: center;
-}
-
-.recommendations-header {
-    font-size: 25px;
-    font-weight: bold;
 }
 
 .book-list-image {
@@ -56,30 +67,48 @@ align-items: center;
     font-style: normal;
 }
 
+.save-button {
+    border-width: 0px;
+    border-radius: 2px;
+}
+
+/* This is hidden on the main page and displayed when a subject button is pressed in order to hide border */
+.trivia-container {
+    border-width: 5px;
+    border-color: rgb(84, 74, 74);
+    border-style:dotted;
+    padding: 20px;
+    width: 380px;
+    margin-left: 40px;
+    margin-top: 20px;
+    text-align: center;
+}
 
 .trivia-description {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 5px;
 }
 
 .trivia-question {
     max-width: 500px;
-    font-size: 25px;
+    font-size: 18px;
     margin-top: 5px;
 }
 
+/* Removed white gap under buttons from bulma, but it could also have been removed by adding background color to body */
 body div.columns {
     margin-bottom: 0px !important;
 }
 
+/* Initial correct and wrong buttons are both gray but will be colorized on hover*/
 .correct {
     background-color: var(--gray);
     border-radius: 5px;
     border: none;
     padding: 10px;
     margin-right: 2px;
-    width: 200px;
+    margin-top: 10px;
+    width: 100px;
 }
 
 .wrong {
@@ -88,7 +117,8 @@ body div.columns {
     border: none;
     padding: 10px;
     margin-right: 2px;
-    width: 200px;
+    margin-top: 10px;
+    width: 100px;
 }
 
 .correct:hover {
@@ -106,11 +136,12 @@ body div.columns {
 }
 
 .saved-book-list-header {
-    margin-top: 10px;
+    margin-top: 20px;
     font-weight: bold;
     font-size: 30px;
 }
 
+/* Title of books in saved books list to the left */
 .saved-book-item {
     font-size: 24px;
     font-style: italic;

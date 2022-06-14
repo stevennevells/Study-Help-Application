@@ -3,13 +3,12 @@ var literatureButton= document.querySelector('.literature-button');
 var scienceButton= document.querySelector('.science-button');
 var historyButton = document.querySelector('.history-button');
 var booksContainer = document.querySelector('.books-container');
-var imageAndTriviaContainer = document.querySelector('.image-trivia-container');
 var imageContainer = document.querySelector('.image-container');
 var triviaContainer = document.querySelector('.trivia-container');
-var heroContainer = document.querySelector('.hero');
 var savedBooksContainer = document.querySelector('.saved-books-container');
+var heroContainer = document.querySelector('.hero');
 var savedBookListHeader = document.querySelector('.saved-book-list-header');
-var savedBookTitle = document.querySelector('.saved-book-title');
+var savedBooksUl = document.querySelector('.saved-books-ul');
 var bookTitleArray;
 
 // Event listeners
@@ -18,17 +17,16 @@ literatureButton.addEventListener('click', literatureFunc);
 scienceButton.addEventListener('click', scienceFunc);
 historyButton.addEventListener('click', historyFunc);
 
-//document.addEventListener('DOMContentLoaded', loadLocalStorage); 
-
 function mathFunc(){
+    loadLocalStorage();
     clearScreen();
     searchBooks();
     searchMathImage();
     searchTriviaMath();
-    loadLocalStorage();
 }
 
 function literatureFunc(){
+    loadLocalStorage();
     clearScreen();
     searchBooks();
     searchLiteratureImage();
@@ -37,6 +35,7 @@ function literatureFunc(){
 }
 
 function scienceFunc(){
+    loadLocalStorage();
     clearScreen();
     searchBooks();
     searchScienceImage();
@@ -44,6 +43,7 @@ function scienceFunc(){
 }
 
 function historyFunc(){
+    loadLocalStorage();
     clearScreen();
     searchBooks();
     searchHistoryImage();
@@ -55,8 +55,6 @@ function clearScreen() {
     imageContainer.textContent = '';
     triviaContainer.textContent = '';
     heroContainer.remove();
-
-    //savedBookListHeader.textContent = '';
 }
 
 function searchBooks () {
@@ -129,21 +127,16 @@ function displayBooks(data) {
 
     recommendationHeaderEl.appendChild(bookListEl);
     booksContainer.appendChild(recommendationHeaderEl);
-    savedBooksContainer.appendChild(savedBookListHeader);
 }
-       
 
 function addBookToSavedList(event) {
-    event.preventDefault();
     var bookText = event.target.parentElement.childNodes[0].innerText;
-    var savedBookList = document.createElement('ul');
     var savedBookItem = document.createElement('li');
 
     savedBookItem.classList = 'saved-book-item'; 
     savedBookItem.textContent = bookText;
 
-    savedBookList.appendChild(savedBookItem);
-    savedBookListHeader.appendChild(savedBookList);
+    savedBooksUl.appendChild(savedBookItem);
     saveToLocalStorage(bookText);
 }
 
@@ -153,20 +146,18 @@ function saveToLocalStorage (bookTitle) {
          localStorage.setItem('Book Title', JSON.stringify(bookTitleArray));
      }
  }
- function appendBook (bookTitle){
-     console.log(bookTitle);
-     var savedBookList = document.createElement('ul');
-     var savedBookItem = document.createElement('li');
- 
-     savedBookItem.classList = 'saved-book-item'; 
-     savedBookItem.textContent = bookTitle;
- 
-     savedBookList.appendChild(savedBookItem);
-     savedBookListHeader.appendChild(savedBookList);
- }
- 
- 
+
+function removeChilds(parent) {
+    while (parent.lastChild) {
+        parent.removeChild(parent.lastChild);
+    }
+}
+
+
+  
  function loadLocalStorage(){
+    removeChilds(savedBooksUl);
+
      if(localStorage.getItem('Book Title') === null){
          bookTitleArray = [];
      }
@@ -175,6 +166,15 @@ function saveToLocalStorage (bookTitle) {
      }
      bookTitleArray.forEach((bookTitle) => appendBook(bookTitle));
  }
+
+ function appendBook (bookTitle){
+    var savedBookItem = document.createElement('li');
+
+    savedBookItem.classList = 'saved-book-item'; 
+    savedBookItem.textContent = bookTitle;
+
+    savedBooksUl.appendChild(savedBookItem);
+}
 
 
 

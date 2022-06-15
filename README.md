@@ -21,6 +21,11 @@ Have a clean repository that meets quality coding standards (file structure, nam
 Have a quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
 
 ```
+## User Story
+User Story:
+As a user, I want to have access to resources defined by subject so that I can easily search and have access to useful and appropriate resources. 
+As a user, I want to see names and book covers of books relating to the subject I am studying.
+As a user, I want to have a way to create a ‘Saved List’ to log books that I find helpful.
 
 ## Tasks Completed
 The HTML document includes:
